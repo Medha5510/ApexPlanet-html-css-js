@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Development Task</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f4f9ff;
+      color: #333;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #006699;
+    }
+
+    p.description {
+      font-size: 1.1em;
+      margin-top: 10px;
+      color: #555;
+      max-width: 600px;
+    }
+
+    img {
+      margin: 20px 0;
+      width: 250px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    a {
+      text-decoration: none;
+      color: #007acc;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    button {
+      margin-top: 25px;
+      padding: 12px 24px;
+      font-size: 1em;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #005f99;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Welcome to Web Development</h1>
+    <p class="description">
+      This is a simple webpage built using <strong>HTML</strong> for structure, 
+      <strong>CSS</strong> for styling, and <strong>JavaScript</strong> for interactivity.
+    </p><br>
+    <p style="color:#555">This is my first Web Page as an intern at Apexplanet Software Pvt.Ltd.</p>
+  </header>
+
+  <img src="https://apexplanet.in/internship/assets/img/0ada0ae5b69f49b12551cdf22d6e0010.png" alt="Placeholder image">
+
+
+  <button onclick="showMessage()">Click Me</button>
+
+  <footer>
+    Visit <a href="https://developer.mozilla.org" target="_blank">MDN Web Docs</a> to learn more!
+  </footer>
+
+  <script>
+    function showMessage() {
+      alert("✅ Button clicked! JavaScript is working.");
+    }
+  </script>
+
+</body>
+</html>
