@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Apex WebApp</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f1f3f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: #023e8a;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar h1 {
+      font-size: 1.4rem;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background: #0077b6;
+      color: white;
+      padding: 2rem;
+      transition: left 0.3s ease-in-out;
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 1rem;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      margin: 1rem 0;
+      text-decoration: none;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 500;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    form, .todo-container {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #023e8a;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #0077b6;
+      outline: none;
+    }
+
+    button {
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background-color: #023e8a;
+    }
+
+    .message {
+      height: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .success { color: #2a9d8f; }
+    .error { color: #d62828; }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f4f4f4;
+      padding: 0.6rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      transition: 0.3s;
+    }
+
+    li.completed span {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .remove-btn {
+      background: #e63946;
+      padding: 0.3rem 0.6rem;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .check-btn {
+      background: #38b000;
+      padding: 0.3rem 0.6rem;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .char-count {
+      font-size: 0.8rem;
+      color: gray;
+      text-align: right;
+    }
+
+    footer {
+      background: #023e8a;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <h2>Menu</h2>
+  <a href="#">Home</a>
+  <a href="#">Contact Form</a>
+  <a href="#">To-Do List</a>
+</div>
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<!-- Navbar -->
+<div class="navbar">
+  <h1>Apex WebApp</h1>
+  <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+</div>
+
+<main>
+  <!-- Contact Form -->
+  <form id="contactForm">
+    <h2>Contact Us</h2>
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <input type="tel" id="phone" placeholder="Phone Number (10 digits)" pattern="[0-9]{10}" required />
+    <input type="text" id="subject" placeholder="Subject" required />
+    <textarea id="message" placeholder="Your Message..." rows="4" maxlength="200"></textarea>
+    <div class="char-count" id="charCount">0 / 200</div>
+    <button type="submit">Send</button>
+    <p class="message" id="formMessage"></p>
+  </form>
+
+  <!-- To-Do List -->
+  <div class="todo-container">
+    <h2>To-Do List</h2>
+    <input type="text" id="taskInput" placeholder="Enter task..." />
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 ApexPlanet | All Rights Reserved.
+</footer>
+
+<script>
+  // Sidebar toggle
+  function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("overlay").classList.toggle("show");
+  }
+
+  // Char counter
+  const messageInput = document.getElementById("message");
+  const charCount = document.getElementById("charCount");
+  messageInput.addEventListener("input", () => {
+    charCount.textContent = `${messageInput.value.length} / 200`;
+  });
+
+  // Form validation
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const subject = document.getElementById("subject").value.trim();
+    const msg = document.getElementById("message").value.trim();
+    const formMessage = document.getElementById("formMessage");
+
+    if (!name || !email || !phone || !subject) {
+      showMessage("Please fill all fields correctly.", "error");
+      return;
+    }
+
+    if (!/^[0-9]{10}$/.test(phone)) {
+      showMessage("Phone must be 10 digits.", "error");
+      return;
+    }
+
+    showMessage("Form submitted successfully!", "success");
+    this.reset();
+    charCount.textContent = "0 / 200";
+  });
+
+  function showMessage(text, type) {
+    const msgEl = document.getElementById("formMessage");
+    msgEl.textContent = text;
+    msgEl.className = `message ${type}`;
+    setTimeout(() => msgEl.textContent = "", 4000);
+  }
+
+  // To-Do Logic
+  let tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+  const taskList = document.getElementById("taskList");
+
+  function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  function renderTasks() {
+    taskList.innerHTML = "";
+    tasks.forEach((task, index) => {
+      const li = document.createElement("li");
+      if (task.done) li.classList.add("completed");
+
+      li.innerHTML = `
+        <span>${task.text}</span>
+        <div class="actions">
+          <button class="check-btn" onclick="toggleDone(${index})">✔</button>
+          <button class="remove-btn" onclick="removeTask(${index})">✖</button>
+        </div>
+      `;
+      taskList.appendChild(li);
+    });
+  }
+
+  function addTask() {
+    const input = document.getElementById("taskInput");
+    const text = input.value.trim();
+    if (text === "") return;
+
+    tasks.push({ text, done: false });
+    saveTasks();
+    renderTasks();
+    input.value = "";
+  }
+
+  function toggleDone(index) {
+    tasks[index].done = !tasks[index].done;
+    saveTasks();
+    renderTasks();
+  }
+
+  function removeTask(index) {
+    tasks.splice(index, 1);
+    saveTasks();
+    renderTasks();
+  }
+
+  renderTasks();
+</script>
+
+</body>
+</html>
