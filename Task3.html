@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ApexPlanet Interactive</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4a90e2;
+      --secondary: #f0f4f8;
+      --text-dark: #333;
+      --text-light: #fff;
+      --card-bg: #ffffff;
+    }
+
+    body.dark {
+      --primary: #90caf9;
+      --secondary: #121212;
+      --text-dark: #e0e0e0;
+      --text-light: #ffffff;
+      --card-bg: #1e1e1e;
+      background-color: var(--secondary);
+      color: var(--text-dark);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--secondary);
+      color: var(--text-dark);
+      padding-top: 70px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: var(--primary);
+      padding: 15px 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 999;
+    }
+
+    header h1 {
+      color: var(--text-light);
+      font-size: 22px;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #cce6ff;
+    }
+
+    .container {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px auto;
+      max-width: 1100px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    .container h2 {
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #357abd;
+    }
+
+    #options button {
+      width: 100%;
+      text-align: left;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .home-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      flex: 1;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 180px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .side-panel {
+      flex: 1;
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .dark-toggle {
+      background: none;
+      color: var(--text-light);
+      border: 2px solid var(--text-light);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .home-grid {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 style="font-weight:700; font-size: 24px; color:white;">
+  🌍 <span style="color: #ffeb3b;">Fun</span><span style="color: white;">Flash Website</span>
+</h1>
+    <nav>
+      <a href="#" onclick="showSection('home')">Home</a>
+      <a href="#" onclick="showSection('quiz')">Quiz</a>
+      <a href="#" onclick="showSection('joke')">Jokes</a>
+      <a href="#" onclick="showSection('contact')">Contact</a>
+      <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+    </nav>
+  </header>
+
+  <!-- Home Section -->
+  <section id="home" class="container">
+    <h2 style="text-align:center;">👋 Welcome to ApexPlanet!</h2>
+    <p style="text-align:center; margin-bottom: 20px;">
+      Your go-to place for fun quizzes and mood-lifting jokes.
+    </p>
+
+    <div class="home-grid">
+      <!-- Main Cards -->
+      <div style="flex: 2;">
+        <div class="card">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Quiz Icon">
+          <h3>Take a Quiz</h3>
+          <p>Test your knowledge with interactive questions.</p>
+          <button onclick="showSection('quiz')">Start Quiz</button>
+        </div>
+
+        <div class="card" style="margin-top: 20px;">
+          <img src="https://cdn-icons-png.flaticon.com/512/166/166527.png" alt="Joke Icon">
+          <h3>Get a Joke</h3>
+          <p>Laugh out loud with random jokes fetched from the web.</p>
+          <button onclick="showSection('joke')">Tell me a Joke</button>
+        </div>
+      </div>
+
+      <!-- Side Panel -->
+      <div class="card" style="margin-top: 20px; background: linear-gradient(to right, #a18cd1, #fbc2eb); color: white;">
+  <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Info Icon" style="max-width: 100px;">
+  <h3>🚀 Know More</h3>
+  <p style="font-size: 15px;">
+    This is more than an app—it's your digital playground for boosting your brain and mood.
+  </p>
+  <ul style="text-align: left; padding: 0 20px;">
+    <li>💡 Powered by HTML, CSS & JS</li><br>
+    <li>⚡ Real-time jokes via API</li><br>
+    <li>🎯 Quiz system with scoring</li><br>
+    <li>🌓 Light/Dark mode toggle</li>
+  </ul>
+  <button onclick="showSection('contact')" style="background-color: rgba(0,0,0,0.2); border: 1px solid white;">Contact Us</button>
+</div>
+
+  </section>
+
+  <!-- Quiz Section -->
+  <section id="quiz" class="container hidden">
+    <h2>JavaScript Quiz</h2>
+    <p id="questionNumber"></p>
+    <p id="question"></p>
+    <div id="options"></div>
+    <p id="result"></p>
+    <p id="score" style="font-weight: bold;"></p>
+    <button onclick="showSection('home')">🔙 Back to Home</button>
+  </section>
+
+  <!-- Joke Section -->
+  <section id="joke" class="container hidden">
+    <h2>Random Joke Generator</h2>
+    <button onclick="getJoke()">Tell me a Joke!</button>
+    <p id="jokeText" style="margin-top: 15px;"></p>
+    <button onclick="showSection('home')">🔙 Back to Home</button>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="container hidden">
+    <h2>Contact Us</h2>
+    <p>📧 Email: support@apexplanet.com</p>
+    <p>📞 Phone: +91-9876543210</p>
+    <p>🌐 Website: <a href="#">www.apexplanet.com</a></p>
+    <button onclick="showSection('home')">🔙 Back to Home</button>
+  </section>
+
+  <footer>
+    © 2025 ApexPlanet Software Pvt Ltd
+  </footer>
+
+  <script>
+    const quizData = [
+      {
+        question: "What does DOM stand for?",
+        options: {
+          a: "Document Object Model",
+          b: "Data Object Management",
+          c: "Digital Order Method",
+          d: "Desktop Oriented Module"
+        },
+        correct: "a"
+      },
+      {
+        question: "Which language runs in a web browser?",
+        options: {
+          a: "Java",
+          b: "C",
+          c: "Python",
+          d: "JavaScript"
+        },
+        correct: "d"
+      },
+      {
+        question: "Which of these is a JavaScript framework?",
+        options: {
+          a: "React",
+          b: "Laravel",
+          c: "Django",
+          d: "Flutter"
+        },
+        correct: "a"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function showSection(sectionId) {
+      const sections = ["home", "quiz", "joke", "contact"];
+      sections.forEach(id => {
+        document.getElementById(id).classList.add("hidden");
+      });
+      document.getElementById(sectionId).classList.remove("hidden");
+
+      if (sectionId === "quiz") {
+        currentQuestion = 0;
+        score = 0;
+        loadQuestion();
+      }
+    }
+
+    function loadQuestion() {
+      const qTotal = quizData.length;
+      if (currentQuestion >= qTotal) {
+        document.getElementById("questionNumber").textContent = "";
+        document.getElementById("question").textContent = "Quiz Completed!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("score").textContent = `Your Score: ${score} / ${qTotal}`;
+        return;
+      }
+
+      const q = quizData[currentQuestion];
+      document.getElementById("questionNumber").textContent = `Question ${currentQuestion + 1} of ${qTotal}`;
+      document.getElementById("question").textContent = q.question;
+
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      for (let key in q.options) {
+        const btn = document.createElement("button");
+        btn.textContent = `${key.toUpperCase()}. ${q.options[key]}`;
+        btn.onclick = () => checkAnswer(key);
+        optionsDiv.appendChild(btn);
+      }
+
+      document.getElementById("result").textContent = "";
+    }
+
+    function checkAnswer(answer) {
+      const correct = quizData[currentQuestion].correct;
+      const result = document.getElementById("result");
+
+      if (answer === correct) {
+        result.textContent = "✅ Correct!";
+        result.style.color = "green";
+        score++;
+      } else {
+        result.textContent = `❌ Wrong! Correct answer is ${correct.toUpperCase()}.`;
+        result.style.color = "red";
+      }
+
+      currentQuestion++;
+      setTimeout(loadQuestion, 1500);
+    }
+
+    async function getJoke() {
+      const jokeDisplay = document.getElementById("jokeText");
+      jokeDisplay.textContent = "Loading...";
+
+      try {
+        const res = await fetch("https://official-joke-api.appspot.com/random_joke");
+        const data = await res.json();
+        jokeDisplay.textContent = `${data.setup} - ${data.punchline}`;
+      } catch (err) {
+        jokeDisplay.textContent = "Failed to fetch a joke 😢";
+      }
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+
+    // Default to home on load
+    showSection('home');
+  </script>
+
+</body>
+</html>
