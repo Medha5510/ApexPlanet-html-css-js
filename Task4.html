@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upgraded Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      color: #222;
+      transition: 0.3s;
+    }
+
+    body.dark {
+      background: #121212;
+      color: #ddd;
+    }
+
+    nav {
+      background: #0077b6;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      margin-left: 1.5rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .side-panel {
+      position: fixed;
+      top: 0;
+      left: -260px;
+      width: 250px;
+      height: 100%;
+      background: #023e8a;
+      color: white;
+      padding: 2rem;
+      transition: left 0.3s ease;
+      z-index: 10;
+    }
+
+    .side-panel.active {
+      left: 0;
+    }
+
+    .side-panel a {
+      color: white;
+      display: block;
+      margin: 1rem 0;
+      text-decoration: none;
+    }
+
+    .side-panel .close {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .toggle-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .dark-toggle {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    section {
+      padding: 3rem 5%;
+      display: none;
+      min-height: 100vh;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 1rem;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    .todo-container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .todo-box {
+      flex: 1;
+      min-width: 300px;
+      padding: 1rem;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .dark .todo-box {
+      background: #1e1e1e;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    ul li.done {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    input, button, textarea {
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+  
+.flip-card {
+  background: transparent;
+  width: 260px;
+  height: 180px;
+  perspective: 1000px;
+  margin: 2rem 0;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  border-radius: 15px;
+  transition: transform 0.8s ease;
+  transform-style: preserve-3d;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.flip-card-front {
+  background: linear-gradient(135deg, #00b4d8, #0077b6);
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #90e0ef, #48cae4);
+  transform: rotateY(180deg);
+  color: #023e8a;
+  font-weight: bold;
+}
+
+
+.flip-card {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+
+
+    .suggestions {
+      margin-top: 1rem;
+      font-style: italic;
+      color: #555;
+    }
+
+     .store-container {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .products, .cart {
+      flex: 1;
+      min-width: 300px;
+      padding: 1rem;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+     .dark .products, .dark .cart {
+      background: #1e1e1e;
+      border: 1px solid #444;
+    }
+
+    .product-card {
+      border: 1px solid #ccc;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: #fafafa;
+    }
+
+      .dark .product-card {
+      background: #2a2a2a;
+    }
+   .about-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.about-container div {
+  flex: 1;
+}
+
+.about-container img {
+  width: 200px;
+  height: auto;
+  border-radius: 10px;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Side Panel -->
+  <div class="side-panel" id="sidePanel">
+    <span class="close" onclick="togglePanel()">×</span>
+    <h3>Navigation</h3>
+    <a onclick="navigate('about')">About</a>
+    <a onclick="navigate('todo')">To-Do</a>
+    <a onclick="navigate('store')">Store</a>
+  </div>
+
+  <!-- Top Navigation -->
+  <nav>
+    <span class="toggle-btn" onclick="togglePanel()">☰ Menu</span>
+    <div>
+      <a onclick="navigate('about')">About</a>
+      <a onclick="navigate('todo')">To-Do</a>
+      <a onclick="navigate('store')">Store</a>
+      <button class="dark-toggle" onclick="toggleDark()">🌓</button>
+    </div>
+  </nav>
+
+  <!-- ✅ ABOUT Section -->
+  <section id="about" class="active">
+    <h1>👩‍💻 About Me</h1>
+    <div class="about-container">
+      <div>
+        <p>Hi! I'm <strong>Medha Jha</strong>, a passionate web developer who loves creating interactive and responsive websites.</p>
+        <p>I specialize in HTML, CSS, JavaScript, and frontend frameworks like React.</p>
+      </div>
+      <img src="https://i.pinimg.com/1200x/54/8a/65/548a659c2b06a877516d3c998f5b0939.jpg" alt="Profile Image" />
+    </div>
+
+    <h2>🚀 My Skills</h2>
+    <table>
+      <tr><th>Technology</th><th>Experience</th><th>Proficiency</th></tr>
+      <tr><td>HTML & CSS</td><td>2 Years</td><td>⭐⭐⭐⭐⭐</td></tr>
+      <tr><td>JavaScript</td><td>1.5 Years</td><td>⭐⭐⭐⭐</td></tr>
+      <tr><td>React</td><td>1 Year</td><td>⭐⭐⭐</td></tr>
+    </table>
+
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <h3>🎉 Fun Fact</h3>
+      <p>Hover to reveal!</p>
+    </div>
+    <div class="flip-card-back">
+      <h3>👩‍💻</h3>
+      <p>I built my first website at 15!</p>
+    </div>
+  </div>
+</div>
+
+
+
+
+    <h2>📁 Projects</h2>
+    <table>
+      <tr><th>Project</th><th>Description</th><th>Link</th></tr>
+      <tr><td>To-Do List</td><td>Task manager with local storage</td><td><a href="#" onclick="navigate('todo')">View</a></td></tr>
+      <tr><td>Product Store</td><td>Filter, sort, cart demo</td><td><a href="#" onclick="navigate('store')">View</a></td></tr>
+    </table>
+  </section>
+
+  <!-- To-Do List -->
+  <section id="todo">
+    <h2>📝 Task Manager</h2>
+    <div class="todo-container">
+      <!-- Task Input -->
+      <div class="todo-box">
+        <input type="text" id="taskInput" placeholder="Enter new task" />
+        <button onclick="addTask()">Add Task</button>
+        <p class="suggestions" id="suggestionBox"></p>
+      </div>
+
+      <!-- Active Tasks -->
+      <div class="todo-box">
+        <h3>🟡 Active Tasks</h3>
+        <ul id="activeList"></ul>
+      </div>
+
+      <!-- Done Tasks -->
+      <div class="todo-box">
+        <h3>✅ Completed</h3>
+        <ul id="doneList"></ul>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- 🛒 STORE Section -->
+  <section id="store">
+    <h2>🛍️ Product Store</h2>
+    <div class="store-container">
+      <!-- Product List -->
+      <div class="products">
+        <h3>Products</h3>
+        <select id="filter" onchange="renderProducts()">
+          <option value="all">All</option>
+          <option value="electronics">Electronics</option>
+          <option value="clothing">Clothing</option>
+        </select>
+        <select id="sort" onchange="renderProducts()">
+          <option value="rating">Sort by Rating</option>
+          <option value="price">Sort by Price</option>
+        </select>
+        <div id="productList"></div>
+      </div>
+
+      <!-- Cart View -->
+      <div class="cart">
+        <h3>🛒 Your Cart</h3>
+        <ul id="cartItems"></ul>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function togglePanel() {
+      document.getElementById("sidePanel").classList.toggle("active");
+    }
+
+    function navigate(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      document.getElementById("sidePanel").classList.remove("active");
+    }
+
+    function toggleDark() {
+      document.body.classList.toggle("dark");
+    }
+
+    // To-Do Logic
+    let tasks = JSON.parse(localStorage.getItem("todo-tasks")) || [];
+
+    function renderTasks() {
+      const activeList = document.getElementById("activeList");
+      const doneList = document.getElementById("doneList");
+      activeList.innerHTML = "";
+      doneList.innerHTML = "";
+
+      tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.textContent = task.text;
+        li.className = task.done ? "done" : "";
+
+        const btn = document.createElement("button");
+        btn.textContent = task.done ? "Undo" : "Done";
+        btn.onclick = () => toggleDone(index);
+
+        const del = document.createElement("button");
+        del.textContent = "❌";
+        del.onclick = () => deleteTask(index);
+
+        li.appendChild(btn);
+        li.appendChild(del);
+
+        if (task.done) {
+          doneList.appendChild(li);
+        } else {
+          activeList.appendChild(li);
+        }
+      });
+
+      suggestProductivity();
+    }
+
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const text = input.value.trim();
+      if (text) {
+        tasks.push({ text, done: false });
+        localStorage.setItem("todo-tasks", JSON.stringify(tasks));
+        input.value = "";
+        renderTasks();
+      }
+    }
+
+    function toggleDone(index) {
+      tasks[index].done = !tasks[index].done;
+      localStorage.setItem("todo-tasks", JSON.stringify(tasks));
+      renderTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      localStorage.setItem("todo-tasks", JSON.stringify(tasks));
+      renderTasks();
+    }
+
+    function suggestProductivity() {
+      const total = tasks.length;
+      const done = tasks.filter(t => t.done).length;
+      const box = document.getElementById("suggestionBox");
+
+      if (total === 0) {
+        box.textContent = "Add tasks to stay organized!";
+      } else if (done === total) {
+        box.textContent = "Awesome! All tasks done!";
+      } else if (done / total > 0.6) {
+        box.textContent = "You're doing great! Keep it up!";
+      } else {
+        box.textContent = "Focus on your priorities!";
+      }
+    }
+
+    renderTasks();
+
+
+    // PRODUCTS + CART
+    const data = [
+      { name: "Phone", category: "electronics", price: 500, rating: 4.5 },
+      { name: "Shirt", category: "clothing", price: 30, rating: 4.2 },
+      { name: "Laptop", category: "electronics", price: 1200, rating: 4.8 }
+    ];
+
+    let cart = [];
+
+    function addToCart(product) {
+      cart.push(product);
+      renderCart();
+    }
+
+    function renderProducts() {
+      const filter = document.getElementById("filter").value;
+      const sort = document.getElementById("sort").value;
+      let filtered = data.filter(p => filter === "all" || p.category === filter);
+
+      if (sort === "price") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+
+      const container = document.getElementById("productList");
+      container.innerHTML = "";
+
+      filtered.forEach(p => {
+        container.innerHTML += `
+          <div class="product-card">
+            <strong>${p.name}</strong><br>
+            Category: ${p.category}<br>
+            Price: $${p.price}<br>
+            Rating: ${p.rating}<br>
+            <button onclick='addToCart(${JSON.stringify(p)})'>Add to Cart</button>
+          </div>`;
+      });
+    }
+
+    function renderCart() {
+      const list = document.getElementById("cartItems");
+      list.innerHTML = "";
+      cart.forEach((item, index) => {
+        list.innerHTML += `<li>${item.name} - $${item.price}</li>`;
+      });
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
